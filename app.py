@@ -2,17 +2,25 @@ from openai import OpenAI
 from datetime import datetime
 import streamlit as st
 import dropbox
+from dropbox_auth import refresh_access_token
 
 # секреты
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-DROPBOX_ACCESS_TOKEN = st.secrets['DROPBOX_ACCESS_TOKEN']
-history_path = '/chat_history.txt'
+refresh_token = st.secrets["REFRESH_TOKEN"]
 
+# авторизация dropbox
+
+try:
+    tokens = refresh_access_token(refresh_token)
+    access_token = tokens['access_token']
+except Exception as e:
+    print(e)
 
 # заголовок
 
-st.image('https://www.dropbox.com/scl/fi/z6p4763x59xhsszsdiany/europlan_logo_white.png?dl=1')
+st.image('https://www.dropbox.com/scl/fi/z6p4763x59xhsszsdiany/europlan_logo_white.png?dl=1') # ЧБ
+# st.image('https://www.dropbox.com/scl/fi/cg05ald042d0g299cfi6a/europlan_logo-RGB.png?dl=1') # цветной
 st.title("Генератор идей")
 st.markdown('### Привет! Представься и расскажи про свою идею')
 
@@ -27,7 +35,7 @@ def save_chat_history():
         for message in st.session_state.messages[2:]
     )
     # загружаем в DropBox
-    dbx = dropbox.Dropbox(DROPBOX_ACCESS_TOKEN)
+    dbx = dropbox.Dropbox(access_token)
     dbx.files_upload(chat_history.encode(), unique_filename, mode=dropbox.files.WriteMode('overwrite'))
 
 
