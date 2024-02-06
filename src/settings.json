@@ -1,5 +1,0 @@
-{
-  "SECRETS_LOCATION": "FILE",
-  "SECRETS_FILE_PATH": "secrets.json",
-  "GPT_AUTH_METHOD": "API_KEY"
-}
