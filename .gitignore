@@ -1,2 +1,5 @@
 # secrets
 .streamlit/
+
+.gitignore
+.gitattributes
