@@ -2,6 +2,7 @@
 
 Idea Refiner is a tool designed to enhance and refine ideas based on user inputs.
 
+https://idea-refiner-dev.streamlit.app/
 
 ## Installation
 Clone the repository and install the required dependencies using pip:
